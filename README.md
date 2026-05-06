@@ -17,3 +17,5 @@ A secure system administration toolkit built with Bash scripting. The project pr
 ## How to Run
 chmod +x *.sh
 bash sentinel.sh
+## GitHub link
+https://github.com/hamza112031-tech/sentinel-project.git
