@@ -32,6 +32,3 @@ while true; do
 done
 fi
 
-if [[ "$1" == "test" ]]; then
- monitor_system
-fi

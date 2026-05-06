@@ -12,7 +12,7 @@ echo "Enter password:"
 read -s password
 if [[ ${#pass} -lt 6 ]]; then
  echo "Password too short!"
- return
+ return 1
 fi
 
 hashed=$(echo -n "$password" | sha256sum | awk '{print $1}')
@@ -34,13 +34,10 @@ store=$(grep "^$username:" .sentinel_users | cut -d: -f2)
 
 if [[ "$hashed" == "$store" ]]; then
 echo "Login successful"
+return 0
 else
 echo "Invalid username or password"
+return 1
 fi
 }
-
-if [[ "$1" == "test" ]]; then  
-signup  
-login 
-fi 
 
