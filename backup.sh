@@ -8,7 +8,9 @@ return
 fi
 
 timestamp=$(date +"%Y-%m-%d_%H-%M")
-filename="backup_$timestamp.tar.gz"
+mkdir -p backups
+
+filename="backups/backup_$timestamp.tar.gz"
 tar -czf "$filename" "$dir"
 echo "Backup created: $filename"
 
