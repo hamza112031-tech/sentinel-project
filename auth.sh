@@ -1,11 +1,21 @@
-/#!/bin/bash
+#!/bin/bash
 signup(){
 echo "---sign up---"
-echo "Enter username: "
+echo "Enter username:"
+if grep -q "^$username:" .sentinel_users; then
+ echo "Username already exists!"
+ return
+fi
+
 read username
-echo "Enter password: "
-read -s pass
-echo hashed=$(echo -n "$pass" | sha256sum | awk '{print $1}')
+echo "Enter password:"
+read -s password
+if [[ ${#pass} -lt 6 ]]; then
+ echo "Password too short!"
+ return
+fi
+
+hashed=$(echo -n "$password" | sha256sum | awk '{print $1}')
 echo "$username:$hashed" >> .sentinel_users
 chmod 600 .sentinel_users
 echo "user created successfully"
@@ -16,11 +26,11 @@ echo "---login---"
 echo "Enter username: "
 read username
 echo "Enter password: "
-read -s pass
+read -s password
 
-echo hashed=$(echo -n "$password" | sha256sum | awk '{print $1}')
+hashed=$(echo -n "$password" | sha256sum | awk '{print $1}')
 
-store=$(grep "^$username: " .sentinel_users | cut -d: -f2)
+store=$(grep "^$username:" .sentinel_users | cut -d: -f2)
 
 if [[ "$hashed" == "$store" ]]; then
 echo "Login successful"

@@ -17,6 +17,23 @@ echo "$timestamp | $dir | $filename | $size">>backup.log
 echo "Backup created: $filename"
 
 }
+view_logs() {
+  echo "--- Backup Logs ---"
+  if [[ -f backup.log ]]; then
+    cat backup.log
+  else
+    echo "No logs found!"
+  fi
+}
+
 if [[ "$1" == "test" ]]; then
- backup
+  echo "1) Create Backup"
+  echo "2) View Logs"
+
+  read -p "Choose option: " choice
+  case $choice in
+    1) backup ;;
+    2) view_logs ;;
+    *) echo "Invalid choice" ;;
+  esac
 fi
